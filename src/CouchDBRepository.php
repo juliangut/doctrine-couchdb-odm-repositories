@@ -15,7 +15,6 @@ namespace Jgut\Doctrine\Repository\CouchDB\ODM;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ODM\CouchDB\DocumentRepository;
-use Jgut\Doctrine\Repository\Pagination\CouchDBAdapter;
 use Jgut\Doctrine\Repository\Repository;
 use Jgut\Doctrine\Repository\Traits\EventsTrait;
 use Jgut\Doctrine\Repository\Traits\PaginatorTrait;
@@ -61,7 +60,7 @@ class CouchDBRepository extends DocumentRepository implements Repository
             $criteria = [$criteria];
         }
 
-        $adapter = new CouchDBAdapter($this->findBy($criteria, $orderBy));
+        $adapter = new CouchDBPaginatorAdapter($this->findBy($criteria, $orderBy));
 
         return $this->getPaginator($adapter, $itemsPerPage);
     }
