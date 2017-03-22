@@ -3,8 +3,9 @@
   "description": "Doctrine2 CouchDB ODM utility entity repositories",
   "keywords": [
     "Doctrine2",
-    "entity repository",
-    "ORM"
+    "document repository",
+    "CouchDB",
+    "ODM"
   ],
   "homepage": "https://github.com/juliangut/doctrine-couchdb-odm-repositories",
   "license": "MIT",
