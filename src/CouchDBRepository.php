@@ -15,9 +15,9 @@ namespace Jgut\Doctrine\Repository\CouchDB\ODM;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ODM\CouchDB\DocumentRepository;
-use Jgut\Doctrine\Repository\Repository;
 use Jgut\Doctrine\Repository\EventsTrait;
 use Jgut\Doctrine\Repository\PaginatorTrait;
+use Jgut\Doctrine\Repository\Repository;
 use Jgut\Doctrine\Repository\RepositoryTrait;
 
 /**
