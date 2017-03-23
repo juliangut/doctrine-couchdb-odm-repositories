@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Jgut\Doctrine\Repository\CouchDB\ODM\Tests\Stubs;
 
+use Doctrine\ODM\CouchDB\DocumentManager;
 use Jgut\Doctrine\Repository\CouchDB\ODM\CouchDBRepository;
 
 /**
@@ -20,7 +21,7 @@ use Jgut\Doctrine\Repository\CouchDB\ODM\CouchDBRepository;
  */
 class RepositoryStub extends CouchDBRepository
 {
-    public function getManager()
+    public function getManager(): DocumentManager
     {
         return parent::getManager();
     }

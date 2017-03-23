@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Jgut\Doctrine\Repository\CouchDB\ODM;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Jgut\Doctrine\ManagerBuilder\CouchDB\DocumentManager;
 use Jgut\Doctrine\ManagerBuilder\CouchDB\Repository\RepositoryFactory;
 
@@ -46,7 +47,7 @@ class CouchDBRepositoryFactory implements RepositoryFactory
     /**
      * {@inheritdoc}
      */
-    public function getRepository(DocumentManager $documentManager, $documentName)
+    public function getRepository(DocumentManager $documentManager, $documentName): ObjectRepository
     {
         $repositoryHash =
             $documentManager->getClassMetadata($documentName)->getName() . spl_object_hash($documentManager);
@@ -68,7 +69,7 @@ class CouchDBRepositoryFactory implements RepositoryFactory
      *
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
-    private function createRepository(DocumentManager $documentManager, $documentName)
+    private function createRepository(DocumentManager $documentManager, $documentName): ObjectRepository
     {
         /* @var $metadata \Doctrine\ODM\CouchDB\Mapping\ClassMetadata */
         $metadata = $documentManager->getClassMetadata($documentName);
