@@ -55,6 +55,10 @@ $documentManager->setRepositoryFactory(new CouchDBRepositoryFactory);
 
 Head to [juliangut/doctrine-base-repositories](https://github.com/juliangut/doctrine-base-repositories) for a list of new methods provided by the repository
 
+## Performance
+
+Due to the lack of a Query Builder such as the ones present in Doctrine ORM and Doctrine MongoDB ODM the paginating and counting operations are vastly inefficient as they need the whole set loaded in memory
+
 ## Contributing
 
 Found a bug or have a feature request? [Please open a new issue](https://github.com/juliangut/doctrine-couchdb-odm-repositories/issues). Have a look at existing issues before.
