@@ -38,6 +38,22 @@ class CouchDBRepositoryTest extends TestCase
         static::assertEquals(DocumentStub::class, $repository->getClassName());
     }
 
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage Doctrines CouchDB manager does not implement filters
+     */
+    public function testFilterCollection()
+    {
+        $manager = $this->getMockBuilder(DocumentManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /* @var DocumentManager $manager */
+
+        $repository = new RepositoryStub($manager, new ClassMetadata(DocumentManager::class));
+
+        $repository->getFilterCollection();
+    }
+
     public function testDocumentManager()
     {
         $manager = $this->getMockBuilder(DocumentManager::class)

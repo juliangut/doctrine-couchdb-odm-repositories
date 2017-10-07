@@ -17,6 +17,7 @@ use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ODM\CouchDB\DocumentManager;
 use Doctrine\ODM\CouchDB\DocumentRepository;
 use Jgut\Doctrine\Repository\EventsTrait;
+use Jgut\Doctrine\Repository\FiltersTrait;
 use Jgut\Doctrine\Repository\PaginatorTrait;
 use Jgut\Doctrine\Repository\Repository;
 use Jgut\Doctrine\Repository\RepositoryTrait;
@@ -27,16 +28,40 @@ use Zend\Paginator\Paginator;
  */
 class CouchDBRepository extends DocumentRepository implements Repository
 {
-    use RepositoryTrait;
+    use RepositoryTrait {
+        refresh as baseRefresh;
+    }
     use EventsTrait;
+    use FiltersTrait;
     use PaginatorTrait;
+
+    /**
+     * Class name.
+     *
+     * @var string
+     */
+    protected $className;
 
     /**
      * {@inheritdoc}
      */
     public function getClassName(): string
     {
-        return ClassUtils::getRealClass(parent::getDocumentName());
+        if ($this->className === null) {
+            $this->className = ClassUtils::getRealClass($this->getDocumentName());
+        }
+
+        return $this->className;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \LogicException
+     */
+    protected function getFilterCollection()
+    {
+        throw new \LogicException('Doctrine\'s CouchDB manager does not implement filters');
     }
 
     /**
@@ -62,9 +87,20 @@ class CouchDBRepository extends DocumentRepository implements Repository
             $criteria = [$criteria];
         }
 
-        $adapter = new CouchDBPaginatorAdapter($this->findBy($criteria, $orderBy));
+        return $this->paginate($this->findBy($criteria, $orderBy));
+    }
 
-        return $this->getPaginator($adapter, $itemsPerPage);
+    /**
+     * Paginate CouchDB results.
+     *
+     * @param array $results
+     * @param int   $itemsPerPage
+     *
+     * @return Paginator
+     */
+    protected function paginate(array $results, int $itemsPerPage = 10): Paginator
+    {
+        return $this->getPaginator(new CouchDBPaginatorAdapter($results), $itemsPerPage);
     }
 
     /**
@@ -77,5 +113,20 @@ class CouchDBRepository extends DocumentRepository implements Repository
     public function countBy($criteria): int
     {
         return count($this->findBy($criteria));
+    }
+
+    /**
+     * Flush managed object.
+     *
+     * @param object|object[]|\Traversable $objects
+     * @param bool                         $flush
+     *
+     * @SuppressWarnings(PMD.UnusedFormalParameter)
+     */
+    protected function flushObjects($objects, bool $flush)
+    {
+        if ($flush || $this->autoFlush) {
+            $this->getManager()->flush();
+        }
     }
 }

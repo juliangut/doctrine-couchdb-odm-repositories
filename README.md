@@ -14,6 +14,10 @@
 
 Doctrine2 CouchDB ODM utility entity repositories
 
+## Important notice
+
+This package is currently broken due to `Doctrine\ODM\CouchDB\DocumentRepository::refresh being defined as final`. This is a situation impossible to be solved by this package that makes it unusable. I've not time nor especial interest in supporting this package, feel free to fork.
+
 ## Installation
 
 ### Composer
@@ -53,7 +57,7 @@ $documentManager->setRepositoryFactory(new CouchDBRepositoryFactory);
 
 ## Functionalities
 
-Head to [juliangut/doctrine-base-repositories](https://github.com/juliangut/doctrine-base-repositories) for a list of new methods provided by the repository
+Head to [juliangut/doctrine-base-repositories](https://github.com/juliangut/doctrine-base-repositories) for a full list of new functionalities provided by the repository
 
 ## Performance
 

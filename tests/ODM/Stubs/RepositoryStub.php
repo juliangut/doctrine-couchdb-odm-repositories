@@ -21,6 +21,17 @@ use Jgut\Doctrine\Repository\CouchDB\ODM\CouchDBRepository;
  */
 class RepositoryStub extends CouchDBRepository
 {
+    /**
+     * @throws \LogicException
+     */
+    public function getFilterCollection()
+    {
+        return parent::getFilterCollection();
+    }
+
+    /**
+     * @return DocumentManager
+     */
     public function getManager(): DocumentManager
     {
         return parent::getManager();
